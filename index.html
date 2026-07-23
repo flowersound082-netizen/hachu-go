@@ -40,8 +40,10 @@
         .tab-btn.active { background: #007aff; color: #fff; box-shadow: 0 3px 8px rgba(0,122,255,0.3); }
         .tab-btn.locked { background: #f0f0f0; color: #888; border: 1px dashed #bbb; }
 
-        /* 🟡 Google AdSense 表示エリア */
-        .ad-container { margin: 10px 0; text-align: center; overflow: hidden; }
+/* 🟡 Google AdSense 表示エリア（未読み込み時の巨大な空白をカット） */
+        .ad-container { margin: 0; text-align: center; overflow: hidden; min-height: 0; }
+        .ad-container:empty { display: none !important; }
+        ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }
 
         /* 🌟 スポナサーバナー共通スタイル */
         .sponsor-ad-box { margin: 12px 0; }
