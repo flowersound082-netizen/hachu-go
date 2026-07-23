@@ -40,8 +40,11 @@
         .tab-btn.active { background: #007aff; color: #fff; box-shadow: 0 3px 8px rgba(0,122,255,0.3); }
         .tab-btn.locked { background: #f0f0f0; color: #888; border: 1px dashed #bbb; }
 
-        /* 🟡 Google AdSense 表示エリア（審査中は枠を非表示） */
+        /* 🟡 Google AdSense 表示エリア */
         .ad-container { margin: 10px 0; text-align: center; overflow: hidden; }
+
+        /* 🌟 スポナサーバナー共通スタイル */
+        .sponsor-ad-box { margin: 12px 0; }
 
         /* アコーディオン */
         .group-container { margin-bottom: 10px; border: 1px solid #eee; border-radius: 10px; overflow: hidden; background: #fff; }
@@ -71,7 +74,7 @@
         /* スマホ露出強化：フッター上の有料プラン導線ボタン */
         .footer-premium-link { display: flex; align-items: center; justify-content: center; gap: 4px; background: #fffbe6; border: 1px solid #ffe58f; color: #d48806; font-size: 0.78rem; font-weight: bold; padding: 6px 10px; border-radius: 6px; margin-bottom: 8px; text-decoration: none; cursor: pointer; text-align: center; }
 
-        /* 👑 料金プラン表（視認性爆上げデザイン） */
+        /* 👑 料金プラン表 */
         .plan-section { background: #fff; padding: 20px 10px; border-radius: 16px; margin: 20px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 2px solid #ffd700; position: relative; overflow: hidden; }
         .plan-header-title { font-size: 1.1rem; font-weight: bold; color: #1e3c72; text-align: center; margin-bottom: 4px; }
         .plan-sub-title { font-size: 0.8rem; color: #666; text-align: center; margin-bottom: 15px; }
@@ -81,7 +84,7 @@
         .plan-table th { background: #f8f9fa; font-size: 0.75rem; font-weight: bold; color: #444; border-top: 1px solid #eee; }
         .plan-table .feature-col { text-align: left; font-weight: bold; color: #333; width: 34%; padding-left: 8px; }
         
-        /* 👑 年額プラン（一番人気）のハイライト */
+        /* 👑 年額プランのハイライト */
         .plan-table .recommend-col { background: #fffdf0; font-weight: bold; border-left: 2px solid #ffd700; border-right: 2px solid #ffd700; }
         .plan-table th.recommend-col { border-top: 2px solid #ffd700; border-radius: 8px 8px 0 0; background: #fffbe6; }
         .plan-table tr:last-child .recommend-col { border-bottom: 2px solid #ffd700; border-radius: 0 0 8px 8px; }
@@ -123,14 +126,17 @@
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
-    <!-- 🌟 自社・協賛者専用 ランダムバナー枠（GAS APIから自動描画） -->
-    <div id="sponsorAdBox" style="margin: 12px 0;"></div>
+    <!-- 🌟 スポンサー広告枠①（最上部エリア） -->
+    <div class="sponsor-ad-box"></div>
 
     <!-- 店舗名入力 -->
     <div class="card" id="storeCard" style="margin-bottom: 8px;">
         <h2>① 店舗名を入力（LINE本文に反映）<span class="required-tag">※必須</span></h2>
         <input type="text" id="storeName" placeholder="例：居酒屋〇〇、バー〇〇">
     </div>
+
+    <!-- 🌟 スポンサー広告枠②（店舗名の下エリア） -->
+    <div class="sponsor-ad-box"></div>
 
     <!-- 検索バー -->
     <div class="search-box">
@@ -144,8 +150,11 @@
         <button class="tab-btn locked" onclick="openLockModal('備品・消耗品')">🔒 備品</button>
     </div>
 
-    <!-- メインコンテンツ -->
+    <!-- メインコンテンツ（アコーディオン） -->
     <div id="accordion-root"></div>
+
+    <!-- 🌟 スポンサー広告枠③（商品リストの下エリア） -->
+    <div class="sponsor-ad-box"></div>
 
     <!-- 備考欄 -->
     <div class="card" style="margin-top: 15px;">
@@ -163,6 +172,9 @@
         </select>
     </div>
 
+    <!-- 🌟 スポンサー広告枠④（送信メッセージ結びの下エリア） -->
+    <div class="sponsor-ad-box"></div>
+
     <!-- 🟢 中部：Google AdSense 広告エリア -->
     <div class="ad-container">
         <ins class="adsbygoogle"
@@ -173,7 +185,7 @@
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
-    <!-- 👑 料金プラン比較表（極上SaaSデザイン） -->
+    <!-- 👑 料金プラン比較表 -->
     <div class="plan-section" id="planSection">
         <div class="plan-header-title">✨ 有料カスタマイズプランのご案内</div>
         <div class="plan-sub-title">自店専用メニュー・広告オフで発注業務をもっと快適に</div>
@@ -225,6 +237,9 @@
             💬 有料プランの相談・お申込み（公式LINE）
         </a>
     </div>
+
+    <!-- 🌟 スポンサー広告枠⑤（一番下の料金表の下エリア） -->
+    <div class="sponsor-ad-box"></div>
 
     <!-- 🟢 下部：Google AdSense 広告エリア -->
     <div class="ad-container">
@@ -310,25 +325,57 @@
                 setSafeStorage('free_app_closing', e.target.value);
             });
 
-            // 🌟 GASから協賛者・自社募集バナーをリアルタイム取得
+            // 🌟 複数枠への分配ロード関数を呼び出し
+            loadAllSponsorAds();
+        };
+
+        function loadAllSponsorAds() {
+            const boxes = document.querySelectorAll('.sponsor-ad-box');
+            if (boxes.length === 0) return;
+
             const gasApiUrl = "https://script.google.com/macros/s/AKfycbzcn2fKAlcf-jPsU_drxB1u-v61CwH2HKs_aMb12-d-sL4vfi0XhpE5gNQa-KxbsU54/exec?mode=api_get_ad";
-            fetch(gasApiUrl)
+
+            fetch(gasApiUrl + "&_t=" + new Date().getTime())
                 .then(res => res.json())
-                .then(ad => {
-                    if (ad && ad.img) {
-                        const box = document.getElementById('sponsorAdBox');
-                        if (box) {
+                .then(data => {
+                    let adsList = [];
+                    if (Array.isArray(data)) {
+                        adsList = data;
+                    } else if (data && data.img) {
+                        adsList = [data];
+                    }
+
+                    if (adsList.length === 0) return;
+
+                    // 広告リストをランダムシャッフル
+                    let shuffled = [...adsList];
+                    for (let i = shuffled.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                    }
+
+                    // 枠ごとに割り当て（足りない場合は重複を許可してランダム挿入）
+                    boxes.forEach((box, index) => {
+                        let selectedAd;
+                        if (index < shuffled.length) {
+                            selectedAd = shuffled[index];
+                        } else {
+                            const rIdx = Math.floor(Math.random() * adsList.length);
+                            selectedAd = adsList[rIdx];
+                        }
+
+                        if (selectedAd && selectedAd.img) {
                             box.innerHTML = `
-                                <a href="${ad.link}" target="_blank" style="display:block; text-decoration:none; position:relative; overflow:hidden; border-radius:10px; margin-bottom:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+                                <a href="${selectedAd.link}" target="_blank" style="display:block; text-decoration:none; position:relative; overflow:hidden; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
                                     <span style="position:absolute; top:6px; right:6px; background:rgba(0,0,0,0.6); color:#fff; font-size:0.6rem; padding:2px 6px; border-radius:4px; font-weight:bold;">PR</span>
-                                    <img src="${ad.img}" style="width:100%; display:block; object-fit:cover; max-height:120px;">
+                                    <img src="${selectedAd.img}" style="width:100%; display:block; object-fit:cover; max-height:120px;">
                                 </a>
                             `;
                         }
-                    }
+                    });
                 })
                 .catch(err => console.error("広告読み込みエラー:", err));
-        };
+        }
 
         function renderAccordion() {
             const root = document.getElementById('accordion-root');
