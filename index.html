@@ -71,18 +71,26 @@
         /* スマホ露出強化：フッター上の有料プラン導線ボタン */
         .footer-premium-link { display: flex; align-items: center; justify-content: center; gap: 4px; background: #fffbe6; border: 1px solid #ffe58f; color: #d48806; font-size: 0.78rem; font-weight: bold; padding: 6px 10px; border-radius: 6px; margin-bottom: 8px; text-decoration: none; cursor: pointer; text-align: center; }
 
-        /* 👑 料金プラン表 */
-        .plan-section { background: #fff; padding: 20px 15px; border-radius: 16px; margin: 20px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 2px solid #ffd700; }
+        /* 👑 料金プラン表（視認性爆上げデザイン） */
+        .plan-section { background: #fff; padding: 20px 10px; border-radius: 16px; margin: 20px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 2px solid #ffd700; position: relative; overflow: hidden; }
         .plan-header-title { font-size: 1.1rem; font-weight: bold; color: #1e3c72; text-align: center; margin-bottom: 4px; }
         .plan-sub-title { font-size: 0.8rem; color: #666; text-align: center; margin-bottom: 15px; }
         
-        .plan-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-        .plan-table th, .plan-table td { padding: 10px 4px; text-align: center; border-bottom: 1px solid #eee; }
-        .plan-table th { background: #f8f9fa; font-size: 0.78rem; font-weight: bold; color: #444; }
-        .plan-table .feature-col { text-align: left; font-weight: bold; color: #333; width: 34%; }
-        .plan-table .recommend-col { background: #fffde7; font-weight: bold; }
-        .price-badge { display: block; font-size: 0.9rem; color: #e74c3c; font-weight: bold; margin-top: 2px; }
-        .recommend-tag { background: #ffd700; color: #333; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; display: inline-block; margin-bottom: 2px; }
+        .plan-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.8rem; }
+        .plan-table th, .plan-table td { padding: 12px 4px; text-align: center; border-bottom: 1px solid #eee; vertical-align: middle; }
+        .plan-table th { background: #f8f9fa; font-size: 0.75rem; font-weight: bold; color: #444; border-top: 1px solid #eee; }
+        .plan-table .feature-col { text-align: left; font-weight: bold; color: #333; width: 34%; padding-left: 8px; }
+        
+        /* 👑 年額プラン（一番人気）のハイライト */
+        .plan-table .recommend-col { background: #fffdf0; font-weight: bold; border-left: 2px solid #ffd700; border-right: 2px solid #ffd700; }
+        .plan-table th.recommend-col { border-top: 2px solid #ffd700; border-radius: 8px 8px 0 0; background: #fffbe6; }
+        .plan-table tr:last-child .recommend-col { border-bottom: 2px solid #ffd700; border-radius: 0 0 8px 8px; }
+        
+        .price-badge { display: block; font-size: 0.95rem; color: #e74c3c; font-weight: bold; margin-top: 2px; }
+        .price-sub { display: block; font-size: 0.65rem; color: #e74c3c; margin-top: 2px; font-weight: normal; }
+        .recommend-tag { background: #ff3b30; color: #fff; font-size: 0.65rem; padding: 3px 8px; border-radius: 12px; display: inline-block; margin-bottom: 4px; font-weight: bold; box-shadow: 0 2px 4px rgba(255,59,48,0.3); }
+        .disabled-text { color: #aaa; font-size: 0.8rem; font-weight: normal; }
+        .highlight-text { color: #ff3b30; font-weight: bold; font-size: 0.88rem; }
 
         .btn-plan-action { display: block; background: #06c755; color: #fff; font-weight: bold; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; font-size: 0.95rem; margin-top: 15px; box-shadow: 0 3px 8px rgba(6,199,85,0.3); }
 
@@ -165,7 +173,7 @@
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
-    <!-- 👑 料金プラン比較表 -->
+    <!-- 👑 料金プラン比較表（極上SaaSデザイン） -->
     <div class="plan-section" id="planSection">
         <div class="plan-header-title">✨ 有料カスタマイズプランのご案内</div>
         <div class="plan-sub-title">自店専用メニュー・広告オフで発注業務をもっと快適に</div>
@@ -173,43 +181,42 @@
         <table class="plan-table">
             <thead>
                 <tr>
-                    <th class="feature-col">機能・特典</th>
-                    <th>月額プラン<span class="price-badge">980円/月</span></th>
+                    <th class="feature-col" style="border-top:none; background:transparent;"></th>
+                    <th>月額プラン<span class="price-badge">980<span style="font-size:0.7rem;">円/月</span></span></th>
                     <th class="recommend-col">
                         <span class="recommend-tag">一番人気</span><br>
-                        年額プラン<span class="price-badge">11,400円/年</span>
+                        年額プラン<span class="price-badge">11,400<span style="font-size:0.7rem;">円/年</span></span>
+                        <span class="price-sub">(実質 950円/月)</span>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="feature-col">画面の広告</td>
-                    <td>🚫 完全非表示</td>
-                    <td class="recommend-col">🚫 完全非表示</td>
+                    <td class="feature-col">広告非表示</td>
+                    <td>⭕️</td>
+                    <td class="recommend-col">⭕️</td>
                 </tr>
                 <tr>
                     <td class="feature-col">自店メニュー</td>
-                    <td>🍷 貴店専用作成</td>
-                    <td class="recommend-col">🍷 貴店専用作成</td>
+                    <td>🍷 貴店専用</td>
+                    <td class="recommend-col">🍷 貴店専用</td>
                 </tr>
                 <tr>
-                    <td class="feature-col">全カテゴリ対応</td>
-                    <td>⭕️ ドリンク/フード/備品</td>
-                    <td class="recommend-col">⭕️ ドリンク/フード/備品</td>
+                    <td class="feature-col">全カテゴリ</td>
+                    <td>⭕️ 対応</td>
+                    <td class="recommend-col">⭕️ 対応</td>
                 </tr>
                 <tr>
-                    <!-- 💡 ここを「管理専用アプリ」にアップデート -->
-                    <td class="feature-col">管理専用アプリ</td>
-                    <td>✖️（ツールのみ）</td>
-                    <td class="recommend-col" style="line-height:1.3;">
-                        <b>⭕️ プレゼント！</b><br>
-                        <span style="font-size:0.65rem; font-weight:normal;">(内容変更・履歴確認が可能)</span>
+                    <td class="feature-col" style="line-height: 1.3;">管理専用アプリ<br><span style="font-size:0.65rem; font-weight:normal; color:#666;">内容変更/履歴確認</span></td>
+                    <td class="disabled-text">✖️ ツールのみ</td>
+                    <td class="recommend-col highlight-text">
+                        🎁 プレゼント
                     </td>
                 </tr>
                 <tr>
-                    <td class="feature-col">自動グラフ集計</td>
-                    <td>✖️</td>
-                    <td class="recommend-col"><b>⭕️ 月別自動グラフ付</b></td>
+                    <td class="feature-col">グラフ集計</td>
+                    <td class="disabled-text">✖️ なし</td>
+                    <td class="recommend-col highlight-text">⭕️ 月別グラフ付</td>
                 </tr>
             </tbody>
         </table>
