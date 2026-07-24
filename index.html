@@ -40,13 +40,15 @@
         .tab-btn.active { background: #007aff; color: #fff; box-shadow: 0 3px 8px rgba(0,122,255,0.3); }
         .tab-btn.locked { background: #f0f0f0; color: #888; border: 1px dashed #bbb; }
 
-/* 🟡 Google AdSense 表示エリア（未読み込み時の巨大な空白をカット） */
+        /* 🟡 Google AdSense 表示エリア */
         .ad-container { margin: 0; text-align: center; overflow: hidden; min-height: 0; }
         .ad-container:empty { display: none !important; }
         ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }
 
-        /* 🌟 スポナサーバナー共通スタイル */
+        /* 🌟 スポンサー広告枠共通スタイル（表示崩れ防止・最適化） */
         .sponsor-ad-box { margin: 12px 0; }
+        .sponsor-ad-box a { display: block; text-decoration: none; position: relative; overflow: hidden; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); background: #eaeaea; }
+        .sponsor-ad-box img { width: 100%; display: block; object-fit: cover; max-height: 120px; }
 
         /* アコーディオン */
         .group-container { margin-bottom: 10px; border: 1px solid #eee; border-radius: 10px; overflow: hidden; background: #fff; }
@@ -327,7 +329,6 @@
                 setSafeStorage('free_app_closing', e.target.value);
             });
 
-            // 🌟 複数枠への分配ロード関数を呼び出し
             loadAllSponsorAds();
         };
 
@@ -349,14 +350,12 @@
 
                     if (adsList.length === 0) return;
 
-                    // 広告リストをランダムシャッフル
                     let shuffled = [...adsList];
                     for (let i = shuffled.length - 1; i > 0; i--) {
                         const j = Math.floor(Math.random() * (i + 1));
                         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
                     }
 
-                    // 枠ごとに割り当て（足りない場合は重複を許可してランダム挿入）
                     boxes.forEach((box, index) => {
                         let selectedAd;
                         if (index < shuffled.length) {
@@ -368,9 +367,9 @@
 
                         if (selectedAd && selectedAd.img) {
                             box.innerHTML = `
-                                <a href="${selectedAd.link}" target="_blank" style="display:block; text-decoration:none; position:relative; overflow:hidden; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-                                    <span style="position:absolute; top:6px; right:6px; background:rgba(0,0,0,0.6); color:#fff; font-size:0.6rem; padding:2px 6px; border-radius:4px; font-weight:bold;">PR</span>
-                                    <img src="${selectedAd.img}" style="width:100%; display:block; object-fit:cover; max-height:120px;">
+                                <a href="${selectedAd.link}" target="_blank">
+                                    <span style="position:absolute; top:6px; right:6px; background:rgba(0,0,0,0.6); color:#fff; font-size:0.6rem; padding:2px 6px; border-radius:4px; font-weight:bold; z-index:1;">PR</span>
+                                    <img src="${selectedAd.img}" alt="スポンサー広告">
                                 </a>
                             `;
                         }
@@ -546,5 +545,7 @@
             window.location.href = lineUrl;
         }
     </script>
+</body>
+</html>
 </body>
 </html>
